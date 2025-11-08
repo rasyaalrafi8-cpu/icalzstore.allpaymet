@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment  IcalzStore</title>
+    <title>PAYMENT ICALZ STORE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -49,6 +49,59 @@
             color: #b8c2cc;
             margin-bottom: 30px;
             transform: translateZ(20px);
+        }
+
+        /* Styling untuk bagian informasi fee */
+        .fee-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fee-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff9a00, #ff2e00);
+        }
+
+        .fee-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #ff9a00;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .fee-table th, .fee-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fee-table th {
+            background: rgba(255, 154, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .fee-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .payment-container {
@@ -233,6 +286,14 @@
             .logo {
                 font-size: 2.5rem;
             }
+            
+            .fee-table {
+                font-size: 0.9rem;
+            }
+            
+            .fee-table th, .fee-table td {
+                padding: 8px 10px;
+            }
         }
     </style>
 </head>
@@ -243,9 +304,43 @@
     
     <div class="container">
         <header>
-            <h1 class="logo">PAYMENT ICALZSTOTE</h1>
-            <p class="tagline">Pembayaran Mudah & Cepat</p>
+            <h1 class="logo">PAYMENT ICALZSTORE</h1>
+            <p class="tagline"></p>
         </header>
+        
+        <!-- Bagian Informasi Biaya ICALZ STORE -->
+        <div class="fee-info">
+            <h2 class="fee-title">ICALZ STORE FEE</h2>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Nominal Transaksi</th>
+                        <th>Biaya Admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rp 0 - Rp 49.999</td>
+                        <td>Rp 1.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 50.000 - Rp 99.999</td>
+                        <td>Rp 3.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 100.000 - Rp 199.999</td>
+                        <td>Rp 5.000</td>
+                    </tr>
+                    <tr>
+                        <td>Rp 200.000 - Rp 100.000.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; margin-top: 15px; color: #ff9a00;">
+                <i class="fas fa-info-circle"></i> Biaya admin akan ditambahkan ke total pembayaran
+            </p>
+        </div>
         
         <div class="payment-container">
             <div class="payment-card">
@@ -297,7 +392,7 @@
     </div>
     
     <footer>
-        <p>&copy; 2023 Payment IcalzStore. Semua hak dilindungi.</p>
+        <p>&copy; 2023 ICALZ STORE. Semua hak dilindungi.</p>
     </footer>
 
     <script>
