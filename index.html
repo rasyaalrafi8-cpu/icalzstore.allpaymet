@@ -1,1 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment  IcalzStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateZ(30px);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #b8c2cc;
+            margin-bottom: 30px;
+            transform: translateZ(20px);
+        }
+
+        .payment-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+        }
+
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .payment-detail {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+            word-break: break-all;
+            transition: all 0.3s ease;
+        }
+
+        .payment-detail:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        .qris-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qris-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .qris-image:hover {
+            transform: scale(1.05);
+        }
+
+        .qris-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateZ(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #b8c2cc;
+            font-size: 0.9rem;
+        }
+
+        /* Efek 3D untuk latar belakang */
+        .bg-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: url('https://files.catbox.moe/n83yo8.jpg') no-repeat center center;
+            background-size: cover;
+            transform: translateZ(-50px) scale(1.5);
+            filter: brightness(0.3) blur(2px);
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-3d"></div>
+    
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="logo">PAYMENT ICALZSTOTE</h1>
+            <p class="tagline">Pembayaran Mudah & Cepat</p>
+        </header>
+        
+        <div class="payment-container">
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #00dbde;">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h2 class="payment-title">DANA</h2>
+                <div class="payment-detail">085777414585</div>
+                <button class="btn copy-btn" data-text="085777414585">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #00a859;">
+                    <i class="fab fa-google-wallet"></i>
+                </div>
+                <h2 class="payment-title">GOPAY</h2>
+                <div class="payment-detail">085719223499</div>
+                <button class="btn copy-btn" data-text="085719223499">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card">
+                <div class="payment-icon" style="color: #ffb600;">
+                    <i class="fas fa-university"></i>
+                </div>
+                <h2 class="payment-title">BANK MANDIRI</h2>
+                <div class="payment-detail">1030012695884</div>
+                <button class="btn copy-btn" data-text="1030012695884">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </div>
+            
+            <div class="payment-card qris-container">
+                <div class="payment-icon" style="color: #fc00ff;">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h2 class="payment-title">QRIS</h2>
+                <div class="qris-image">
+                    <img src="https://files.catbox.moe/s02tew.jpg" alt="QRIS Payment">
+                </div>
+                <a href="https://files.catbox.moe/s02tew.jpg" download="QRIS-Payment.jpg" class="btn">
+                    <i class="fas fa-download"></i> Download QR
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Payment Gateway 3D. Semua hak dilindungi.</p>
+    </footer>
+
+    <script>
+        // Membuat elemen floating
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const count = 15;
+            
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Posisi acak
+                const left = Math.random() * 100;
+                const size = Math.random() * 30 + 10;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 15;
+                
+                element.style.left = `${left}%`;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.animationDelay = `${delay}s`;
+                element.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        // Fungsi untuk menyalin teks
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-text');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Efek parallax pada scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const bg = document.querySelector('.bg-3d');
+            bg.style.transform = `translateZ(-50px) scale(1.5) translateY(${scrolled * 0.5}px)`;
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+        });
+    </script>
+</body>
+</html>
